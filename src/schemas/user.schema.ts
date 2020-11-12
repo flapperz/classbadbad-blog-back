@@ -1,5 +1,6 @@
 // import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import {  Types, Schema, model } from 'mongoose';
+import { Schema, model } from 'mongoose';
+
 
 export const UserSchema = new Schema({
     userId: Schema.Types.ObjectId,
