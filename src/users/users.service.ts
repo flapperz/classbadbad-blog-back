@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 // import { User, UserSchema } from '../schemas/user.schema';
 import { User } from '../interfaces/user.interface'
+import createUserDto from './dto/create-user-dto';
 
 @Injectable()
 export class UsersService {
@@ -12,5 +13,10 @@ export class UsersService {
         return await this.userModel.find({});
     }
 
-    // async create()
+    async create(user: createUserDto): Promise<any> {
+        user.joinedSince = new Date();
+        const userEntity: User = await this.userModel.create(user);
+
+        return userEntity;
+    }
 }

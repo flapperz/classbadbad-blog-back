@@ -7,7 +7,7 @@ export const UserSchema = new Schema({
     username: String,
     password: String,
     joinedSince: Date,
-    role: {type: Number, enum: ['user', 'admin'], default: 'user'}
+    role: Number
 });
 
 export const User = model('User', UserSchema);
