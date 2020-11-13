@@ -14,8 +14,10 @@ export class UsersService {
     }
 
     async create(user: createUserDto): Promise<any> {
-        user.joinedSince = new Date();
-        const userEntity: User = await this.userModel.create(user);
+        const userEntity: User = await this.userModel.create({
+            ...user,
+            joinedSince: new Date(),
+        });
 
         return userEntity;
     }
