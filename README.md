@@ -2,7 +2,7 @@
 Computer Security's terms project
 
 ## ACL
-| Role  | Own post | Others post | Own comment | Other comment         |
+| Role  | Own post | Others post | Own comment | Others comment         |
 |-------|----------|-------------|-------------|-----------------------|
 | Admin | CRUD     | RUD         | CRUD        | RUD                   |
 | User  | CRUD     | R           | CRUD        | RD(Only on self post) |
