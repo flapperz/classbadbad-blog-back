@@ -10,7 +10,7 @@ import {
     Request,
 } from '@nestjs/common';
 import { Get, Post } from '@nestjs/common';
-import { ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { Types } from 'mongoose';
 import { User } from '../interfaces/user.interface.entity';
 import createUserDto from './dto/create-user.dto';
@@ -21,17 +21,30 @@ import { UsersService } from './users.service';
 export class UsersController {
     constructor(private readonly usersService: UsersService) {}
 
+    @ApiOperation({
+        summary: 'Get all users',
+    })
     @Get('all')
     findAllUsers(): Promise<User[]> {
         return this.usersService.findAll();
     }
 
+    @ApiOperation({
+        summary: 'Get user from ID or Current user if no ID provided',
+    })
     @ApiParam({ name: 'userId', type: String })
     @Get(':userId')
     async findAUser(@Param() params): Promise<User> {
+        if (params.userId == '')
+            return this.usersService.findOne(
+                Types.ObjectId('5fad8d9830711d03b0b43a9c'),
+            );
         return this.usersService.findOne(Types.ObjectId(params.userId));
     }
 
+    @ApiOperation({
+        summary: 'Create User',
+    })
     @Post()
     async createUser(@Body() user: createUserDto): Promise<any> {
         try {
