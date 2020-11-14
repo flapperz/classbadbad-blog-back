@@ -1,10 +1,10 @@
 import { Model, Types } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel, Schema } from '@nestjs/mongoose';
-import { Post } from '../interfaces/post.interface';
-import createPostDto from './dto/create-post-dto';
-import editPostDto from './dto/edit-post-dto';
-import addCommentDto from './dto/add-comment-dto';
+import { Post } from '../interfaces/post.interface.entity';
+import createPostDto from './dto/create-post.dto';
+import editPostDto from './dto/edit-post.dto';
+import addCommentDto from './dto/add-comment.entity';
 import mongoose from 'mongoose';
 
 // import createUserDto from './dto/create-user-dto';

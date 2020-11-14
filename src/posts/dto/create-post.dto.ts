@@ -5,7 +5,7 @@ import {
     IsNumber,
     IsBoolean,
 } from 'class-validator';
-import { User } from 'src/interfaces/user.interface';
+import { User } from 'src/interfaces/user.interface.entity';
 
 class createPostDto {
     // userId : Partial<User>

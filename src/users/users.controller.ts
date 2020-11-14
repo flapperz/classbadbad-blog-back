@@ -10,7 +10,7 @@ import {
     Request,
 } from '@nestjs/common';
 import { Get, Post } from '@nestjs/common';
-import { User } from '../interfaces/user.interface';
+import { User } from '../interfaces/user.interface.entity';
 import createUserDto from './dto/create-user-dto';
 import { UsersService } from './users.service';
 

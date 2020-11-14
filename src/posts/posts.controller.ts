@@ -8,12 +8,13 @@ import {
     UseGuards,
     Req,
     Request,
+    Patch,
 } from '@nestjs/common';
 import { Get, Post, Put, Delete } from '@nestjs/common';
-import { Post as IPost } from '../interfaces/post.interface';
-import addCommentDto from './dto/add-comment-dto';
-import createPostDto from './dto/create-post-dto';
-import editPostDto from './dto/edit-post-dto';
+import { Post as IPost } from '../interfaces/post.interface.entity';
+import addCommentDto from './dto/add-comment.entity';
+import createPostDto from './dto/create-post.dto';
+import editPostDto from './dto/edit-post.dto';
 import { PostsService } from './posts.service';
 
 @Controller('post')
@@ -25,7 +26,7 @@ export class PostsController {
         return this.postsService.findAllPost();
     }
 
-    @Post('create')
+    @Post()
     async createPost(@Body() post: createPostDto): Promise<any> {
         try {
             await this.postsService.create(post);
@@ -38,7 +39,7 @@ export class PostsController {
         }
     }
 
-    @Post('edit')
+    @Patch()
     async editPost(@Body() post: editPostDto): Promise<any> {
         try {
             await this.postsService.editPost(post);
@@ -51,7 +52,7 @@ export class PostsController {
         }
     }
 
-    @Delete('delete/:postId')
+    @Delete(':postId')
     async deletePost(@Param() params): Promise<any> {
         try {
             await this.postsService.deletePost(params.postId);
@@ -71,7 +72,7 @@ export class PostsController {
         return this.postsService.findAllComments(params.postId);
     }
 
-    @Post('comment/add/:postId')
+    @Post('comment/:postId')
     async addComment(
         @Body() comment: addCommentDto,
         @Param() params,
@@ -87,7 +88,7 @@ export class PostsController {
         }
     }
 
-    @Post('comment/edit/:postId/:commentId')
+    @Patch('comment/:postId/:commentId')
     async editComment(
         @Body() comment: addCommentDto,
         @Param() params,
@@ -107,7 +108,7 @@ export class PostsController {
         }
     }
 
-    @Delete('comment/delete/:postId/:commentId')
+    @Delete('comment/:postId/:commentId')
     async deleteComment(@Param() params): Promise<any> {
         try {
             await this.postsService.deleteComment(
