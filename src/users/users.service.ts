@@ -19,6 +19,11 @@ export class UsersService {
     }
 
     async create(user: createUserDto): Promise<any> {
+        if (
+            (await this.userModel.findOne({ username: user.username })) !== null
+        )
+            throw new Error('User existed');
+
         const userEntity: User = await this.userModel.create({
             ...user,
             joinedSince: new Date(),
