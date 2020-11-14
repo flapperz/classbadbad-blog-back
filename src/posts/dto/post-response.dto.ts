@@ -1,15 +1,12 @@
-import { Type } from '@nestjs/common';
-import { Document, Types } from 'mongoose';
-import { User } from './user.interface.entity';
+import { Types, Document } from 'mongoose';
 
-export interface Post extends Document {
+export class PostResponseObject extends Document {
     readonly userId: Types.ObjectId;
     readonly message: string;
     readonly timestamp: Date;
     readonly isEdited: boolean;
     readonly comments: [
         {
-            _id: Types.ObjectId;
             userId: Types.ObjectId;
             commentMsg: string;
             timestamp: Date;
