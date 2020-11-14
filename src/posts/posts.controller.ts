@@ -8,10 +8,13 @@ import {
     UseGuards,
     Req,
     Request,
+    Get,
+    Post,
     Patch,
+    Delete,
 } from '@nestjs/common';
-import { Get, Post, Put, Delete } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiParam, ApiTags } from '@nestjs/swagger';
+import { Types } from 'mongoose';
 import { Post as IPost } from '../interfaces/post.interface.entity';
 import addCommentDto from './dto/add-comment.dto';
 import createPostDto from './dto/create-post.dto';
@@ -57,10 +60,11 @@ export class PostsController {
     }
 
     @ApiTags('Post')
+    @ApiParam({ name: 'postId', type: String })
     @Delete(':postId')
     async deletePost(@Param() params): Promise<any> {
         try {
-            await this.postsService.deletePost(params.postId);
+            await this.postsService.deletePost(Types.ObjectId(params.postId));
             return {
                 status: 200,
                 message: 'delete post ok',
@@ -73,20 +77,24 @@ export class PostsController {
     //COMMENT SECTION
 
     @ApiTags('Comment')
+    @ApiParam({ name: 'postId', type: String })
     @Get('comment/:postId')
     async findAllComments(@Param() params): Promise<any> {
-        return this.postsService.findAllComments(params.postId);
+        return this.postsService.findAllComments(Types.ObjectId(params.postId));
     }
 
     @ApiTags('Comment')
-    @ApiTags('Comment')
+    @ApiParam({ name: 'postId', type: String })
     @Post('comment/:postId')
     async addComment(
         @Body() comment: addCommentDto,
         @Param() params,
     ): Promise<any> {
         try {
-            await this.postsService.addComment(params.postId, comment);
+            await this.postsService.addComment(
+                Types.ObjectId(params.postId),
+                comment,
+            );
             return {
                 status: 200,
                 message: 'add comment ok',
@@ -97,6 +105,8 @@ export class PostsController {
     }
 
     @ApiTags('Comment')
+    @ApiParam({ name: 'postId', type: String })
+    @ApiParam({ name: 'commentId', type: String })
     @Patch('comment/:postId/:commentId')
     async editComment(
         @Body() comment: addCommentDto,
@@ -104,7 +114,7 @@ export class PostsController {
     ): Promise<any> {
         try {
             await this.postsService.editComment(
-                params.postId,
+                Types.ObjectId(params.postId),
                 params.commentId,
                 comment,
             );
@@ -118,11 +128,13 @@ export class PostsController {
     }
 
     @ApiTags('Comment')
+    @ApiParam({ name: 'postId', type: String })
+    @ApiParam({ name: 'commentId', type: String })
     @Delete('comment/:postId/:commentId')
     async deleteComment(@Param() params): Promise<any> {
         try {
             await this.postsService.deleteComment(
-                params.postId,
+                Types.ObjectId(params.postId),
                 params.commentId,
             );
             return {
