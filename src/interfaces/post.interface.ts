@@ -3,17 +3,17 @@ import { User } from '../interfaces/user.interface';
 
 export interface Post extends Document {
     readonly userId: User;
-    readonly message: String;
+    readonly message: string;
     readonly timestamp: Date;
-    readonly isEdited: Boolean;
-    readonly isDeleted: Boolean;
+    readonly isEdited: boolean;
+    readonly isDeleted: boolean;
     readonly replies: [
         {
             userId: User;
-            replyMsg: String;
+            replyMsg: string;
             timestamp: Date;
-            isEdited: Boolean;
-            isDeleted: Boolean;
+            isEdited: boolean;
+            isDeleted: boolean;
         },
     ];
 }
