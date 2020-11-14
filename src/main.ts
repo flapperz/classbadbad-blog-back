@@ -9,7 +9,6 @@ async function bootstrap() {
         .setTitle('Classbadbad swagger')
         .setDescription('Classbadbad backend API description')
         .setVersion('1.0')
-        .addTag('security suck')
         .build();
     const document = SwaggerModule.createDocument(app, options);
     SwaggerModule.setup('api', app, document);
