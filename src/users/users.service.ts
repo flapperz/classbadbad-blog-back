@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { User } from '../interfaces/user.interface.entity';
 import createUserDto from './dto/create-user.dto';
+import bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -28,8 +29,17 @@ export class UsersService {
         )
             throw new Error('User existed');
 
+        const saltRounds = 10;
+        const { password, ...otherInfo } = user;
+        const hashedPassword = await new Promise((resolve, reject) => {
+            bcrypt.hash(password, saltRounds, function (err, hash) {
+                if (err) reject(err);
+                resolve(hash);
+            });
+        });
         const userEntity: User = await this.userModel.create({
-            ...user,
+            ...otherInfo,
+            password: hashedPassword,
             joinedSince: new Date(),
         });
 
