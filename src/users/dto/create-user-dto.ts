@@ -1,9 +1,4 @@
-import {
-    IsString,
-    IsNotEmpty,
-    IsDateString,
-    IsNumber
-} from "class-validator"
+import { IsString, IsNotEmpty, IsDateString, IsNumber } from 'class-validator';
 
 class createUserDto {
     // userId: number,
@@ -20,7 +15,7 @@ class createUserDto {
 
     @IsNotEmpty()
     @IsNumber()
-    role: number
+    role: number;
 }
 
 export default createUserDto;

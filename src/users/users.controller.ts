@@ -8,13 +8,13 @@ import {
     UseGuards,
     Req,
     Request,
-  } from "@nestjs/common";
-import { Get, Post } from "@nestjs/common";
-import { User } from "../interfaces/user.interface";
-import createUserDto from "./dto/create-user-dto";
-import { UsersService } from "./users.service";
+} from '@nestjs/common';
+import { Get, Post } from '@nestjs/common';
+import { User } from '../interfaces/user.interface';
+import createUserDto from './dto/create-user-dto';
+import { UsersService } from './users.service';
 
-@Controller("user")
+@Controller('user')
 export class UsersController {
     constructor(private readonly usersService: UsersService) {}
 
@@ -23,18 +23,16 @@ export class UsersController {
         return this.usersService.findAll();
     }
 
-    @Post("create")
+    @Post('create')
     async createUser(@Body() user: createUserDto): Promise<any> {
         try {
             await this.usersService.create(user);
             return {
-              status: 200,
-              message: "ok"
+                status: 200,
+                message: 'ok',
             };
-          } catch (err) {
+        } catch (err) {
             throw new HttpException(err.message, HttpStatus.BAD_REQUEST);
         }
     }
 }
-
-

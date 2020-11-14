@@ -3,13 +3,13 @@ import {
     IsNotEmpty,
     IsDateString,
     IsNumber,
-    IsBoolean
-} from "class-validator";
+    IsBoolean,
+} from 'class-validator';
 
 class addCommentDto {
     @IsNotEmpty()
     @IsString()
-    commentMsg : string;
+    commentMsg: string;
 }
 
 export default addCommentDto;

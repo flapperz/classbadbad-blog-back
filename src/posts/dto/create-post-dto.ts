@@ -3,17 +3,16 @@ import {
     IsNotEmpty,
     IsDateString,
     IsNumber,
-    IsBoolean
-} from "class-validator";
+    IsBoolean,
+} from 'class-validator';
 import { User } from 'src/interfaces/user.interface';
 
 class createPostDto {
-
     // userId : Partial<User>
 
     @IsNotEmpty()
     @IsString()
-    message : string;
+    message: string;
 
     // @IsDateString()
     // timestamp : Date;
@@ -31,7 +30,6 @@ class createPostDto {
     //     isEdited : Boolean,
     //     isDeleted : Boolean
     // }]
-   
 }
 
 export default createPostDto;

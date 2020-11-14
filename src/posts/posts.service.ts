@@ -10,83 +10,100 @@ import addCommentDto from './dto/add-comment-dto';
 
 @Injectable()
 export class PostsService {
-    constructor(@InjectModel('Post') private readonly postModel : Model<Post>) {}
+    constructor(@InjectModel('Post') private readonly postModel: Model<Post>) {}
 
     //POST SECTION
     async findAllPost(): Promise<Post[]> {
         return await this.postModel.find({});
     }
 
-    async create(post: createPostDto): Promise<any> {   
+    async create(post: createPostDto): Promise<any> {
         const postEntity: Post = await this.postModel.create({
-            ...post, 
+            ...post,
             userId: require('mongoose').Types.ObjectId(), //fake userId
             timestamp: new Date(),
             isEdited: false,
-            comments: []
+            comments: [],
         });
 
         return postEntity;
-    };
+    }
 
     async editPost(post: editPostDto): Promise<any> {
         //TODO: check role
-        return this.postModel.updateOne( {"_id": post.postId}, {
-             ...post, 
-             isEdited: true, 
-             timestamp: new Date()
-        } )
-    };
+        return this.postModel.updateOne(
+            { _id: post.postId },
+            {
+                ...post,
+                isEdited: true,
+                timestamp: new Date(),
+            },
+        );
+    }
 
-    async deletePost(postId: Types.ObjectId): Promise<any> { 
+    async deletePost(postId: Types.ObjectId): Promise<any> {
         //TODO: check role
-        return this.postModel.deleteOne({"_id": postId})
-    };
+        return this.postModel.deleteOne({ _id: postId });
+    }
 
     //COMMENTS SECTION
 
     async findAllComments(postId: Types.ObjectId): Promise<any> {
-        return await this.postModel.findOne({"_id": postId},{"comments": 1}) //Show just comment field
-    };
+        return await this.postModel.findOne({ _id: postId }, { comments: 1 }); //Show just comment field
+    }
 
-
-    async addComment(postId: Types.ObjectId, comment: addCommentDto): Promise<any> {
+    async addComment(
+        postId: Types.ObjectId,
+        comment: addCommentDto,
+    ): Promise<any> {
         return this.postModel.updateOne(
-            {"_id": postId}, 
-            {$push : {
-                comments: {
-                    ...comment,
-                    _id: require('mongoose').Types.ObjectId(),
-                    userId: require('mongoose').Types.ObjectId(), //fake userId
-                    timestamp: new Date(),
-                    isEdited: false,
-                }
-            }}
+            { _id: postId },
+            {
+                $push: {
+                    comments: {
+                        ...comment,
+                        _id: require('mongoose').Types.ObjectId(),
+                        userId: require('mongoose').Types.ObjectId(), //fake userId
+                        timestamp: new Date(),
+                        isEdited: false,
+                    },
+                },
+            },
         );
-    };
+    }
 
-    async editComment(postId: Types.ObjectId, commentId: Types.ObjectId, comment: addCommentDto): Promise<any> {
+    async editComment(
+        postId: Types.ObjectId,
+        commentId: Types.ObjectId,
+        comment: addCommentDto,
+    ): Promise<any> {
         //TODO: check role
         return this.postModel.updateOne(
-            {"_id": postId, "comments._id": commentId}, 
-            { $set: {
-                "comments.$.commentMsg": comment.commentMsg,
-                "comments.$.isEdited": true,
-                "comments.$.timestamp": new Date(),
-            }}
+            { _id: postId, 'comments._id': commentId },
+            {
+                $set: {
+                    'comments.$.commentMsg': comment.commentMsg,
+                    'comments.$.isEdited': true,
+                    'comments.$.timestamp': new Date(),
+                },
+            },
         );
-    };
+    }
 
-    async deleteComment(postId: Types.ObjectId, commentId: Types.ObjectId): Promise<any> {
+    async deleteComment(
+        postId: Types.ObjectId,
+        commentId: Types.ObjectId,
+    ): Promise<any> {
         //TODO: check role
         return this.postModel.updateOne(
-            {"_id": postId},
-            {$pull: {
-                comments: {
-                    _id: commentId
-                }
-            }}
+            { _id: postId },
+            {
+                $pull: {
+                    comments: {
+                        _id: commentId,
+                    },
+                },
+            },
         );
-    };
-
+    }
 }
