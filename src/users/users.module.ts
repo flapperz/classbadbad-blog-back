@@ -10,6 +10,6 @@ import { UsersService } from './users.service';
     ], //BEWARE TYPO!!!!
     controllers: [UsersController],
     providers: [UsersService],
-    //exports: [UsersService]
+    exports: [UsersService],
 })
 export class UsersModule {}

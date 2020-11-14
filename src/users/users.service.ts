@@ -18,6 +18,10 @@ export class UsersService {
             .select('-password');
     }
 
+    async findOneWithPass(username: string): Promise<User> {
+        return await this.userModel.findOne({ username });
+    }
+
     async create(user: createUserDto): Promise<any> {
         if (
             (await this.userModel.findOne({ username: user.username })) !== null

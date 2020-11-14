@@ -6,7 +6,10 @@ import {
     HttpStatus,
     Param,
     Post,
+    UseGuards,
+    Request,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { Types } from 'mongoose';
 import { User } from '../interfaces/user.interface.entity';
