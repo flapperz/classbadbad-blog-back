@@ -4,7 +4,7 @@ import { InjectModel, Schema } from '@nestjs/mongoose';
 import { Post } from '../interfaces/post.interface.entity';
 import createPostDto from './dto/create-post.dto';
 import editPostDto from './dto/edit-post.dto';
-import addCommentDto from './dto/add-comment.entity';
+import addCommentDto from './dto/add-comment.dto';
 import mongoose from 'mongoose';
 
 // import createUserDto from './dto/create-user-dto';

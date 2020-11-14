@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { Get, Post, Put, Delete } from '@nestjs/common';
 import { Post as IPost } from '../interfaces/post.interface.entity';
-import addCommentDto from './dto/add-comment.entity';
+import addCommentDto from './dto/add-comment.dto';
 import createPostDto from './dto/create-post.dto';
 import editPostDto from './dto/edit-post.dto';
 import { PostsService } from './posts.service';
