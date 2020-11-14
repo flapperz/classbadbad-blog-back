@@ -1,10 +1,4 @@
-import {
-    IsString,
-    IsNotEmpty,
-    IsDateString,
-    IsNumber,
-    IsBoolean,
-} from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 class addCommentDto {
     @IsNotEmpty()

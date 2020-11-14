@@ -1,17 +1,13 @@
 import {
-    Controller,
     Body,
+    Controller,
+    Delete,
+    Get,
     HttpException,
     HttpStatus,
-    Res,
     Param,
-    UseGuards,
-    Req,
-    Request,
-    Get,
-    Post,
     Patch,
-    Delete,
+    Post,
 } from '@nestjs/common';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { Types } from 'mongoose';

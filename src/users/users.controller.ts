@@ -1,15 +1,12 @@
 import {
-    Controller,
     Body,
+    Controller,
+    Get,
     HttpException,
     HttpStatus,
-    Res,
     Param,
-    UseGuards,
-    Req,
-    Request,
+    Post,
 } from '@nestjs/common';
-import { Get, Post } from '@nestjs/common';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { Types } from 'mongoose';
 import { User } from '../interfaces/user.interface.entity';

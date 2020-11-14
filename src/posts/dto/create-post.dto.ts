@@ -1,11 +1,4 @@
-import {
-    IsString,
-    IsNotEmpty,
-    IsDateString,
-    IsNumber,
-    IsBoolean,
-} from 'class-validator';
-import { User } from 'src/interfaces/user.interface.entity';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 class createPostDto {
     // userId : Partial<User>
