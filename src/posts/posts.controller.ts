@@ -13,7 +13,7 @@ import {
     Patch,
     Delete,
 } from '@nestjs/common';
-import { ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { Types } from 'mongoose';
 import { Post as IPost } from '../interfaces/post.interface.entity';
 import addCommentDto from './dto/add-comment.dto';
@@ -25,12 +25,18 @@ import { PostsService } from './posts.service';
 export class PostsController {
     constructor(private readonly postsService: PostsService) {}
 
+    @ApiOperation({
+        summary: 'Get all posts and comments (Entire feed)',
+    })
     @ApiTags('Post')
     @Get()
     findAllPost(): Promise<IPost[]> {
         return this.postsService.findAllPost();
     }
 
+    @ApiOperation({
+        summary: 'Create Post',
+    })
     @ApiTags('Post')
     @Post()
     async createPost(@Body() post: createPostDto): Promise<any> {
@@ -45,6 +51,9 @@ export class PostsController {
         }
     }
 
+    @ApiOperation({
+        summary: 'Update Post',
+    })
     @ApiTags('Post')
     @Patch()
     async editPost(@Body() post: editPostDto): Promise<any> {
@@ -59,6 +68,9 @@ export class PostsController {
         }
     }
 
+    @ApiOperation({
+        summary: 'Delete Post',
+    })
     @ApiTags('Post')
     @ApiParam({ name: 'postId', type: String })
     @Delete(':postId')
@@ -75,7 +87,9 @@ export class PostsController {
     }
 
     //COMMENT SECTION
-
+    @ApiOperation({
+        summary: 'Get all comments in a post',
+    })
     @ApiTags('Comment')
     @ApiParam({ name: 'postId', type: String })
     @Get('comment/:postId')
@@ -83,6 +97,9 @@ export class PostsController {
         return this.postsService.findAllComments(Types.ObjectId(params.postId));
     }
 
+    @ApiOperation({
+        summary: 'Create Comment',
+    })
     @ApiTags('Comment')
     @ApiParam({ name: 'postId', type: String })
     @Post('comment/:postId')
@@ -104,6 +121,9 @@ export class PostsController {
         }
     }
 
+    @ApiOperation({
+        summary: 'Update Comment',
+    })
     @ApiTags('Comment')
     @ApiParam({ name: 'postId', type: String })
     @ApiParam({ name: 'commentId', type: String })
@@ -127,6 +147,9 @@ export class PostsController {
         }
     }
 
+    @ApiOperation({
+        summary: 'Delete Comment',
+    })
     @ApiTags('Comment')
     @ApiParam({ name: 'postId', type: String })
     @ApiParam({ name: 'commentId', type: String })
