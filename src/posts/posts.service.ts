@@ -5,6 +5,7 @@ import { Post } from '../interfaces/post.interface';
 import createPostDto from './dto/create-post-dto';
 import editPostDto from './dto/edit-post-dto';
 import addCommentDto from './dto/add-comment-dto';
+import mongoose from 'mongoose';
 
 // import createUserDto from './dto/create-user-dto';
 
@@ -20,7 +21,7 @@ export class PostsService {
     async create(post: createPostDto): Promise<any> {
         const postEntity: Post = await this.postModel.create({
             ...post,
-            userId: require('mongoose').Types.ObjectId(), //fake userId
+            userId: mongoose.Types.ObjectId(), //fake userId
             timestamp: new Date(),
             isEdited: false,
             comments: [],
@@ -62,8 +63,8 @@ export class PostsService {
                 $push: {
                     comments: {
                         ...comment,
-                        _id: require('mongoose').Types.ObjectId(),
-                        userId: require('mongoose').Types.ObjectId(), //fake userId
+                        _id: mongoose.Types.ObjectId(),
+                        userId: mongoose.Types.ObjectId(), //fake userId
                         timestamp: new Date(),
                         isEdited: false,
                     },
