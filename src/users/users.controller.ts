@@ -10,7 +10,8 @@ import {
     Request,
 } from '@nestjs/common';
 import { Get, Post } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiParam, ApiTags } from '@nestjs/swagger';
+import { Types } from 'mongoose';
 import { User } from '../interfaces/user.interface.entity';
 import createUserDto from './dto/create-user.dto';
 import { UsersService } from './users.service';
@@ -20,12 +21,18 @@ import { UsersService } from './users.service';
 export class UsersController {
     constructor(private readonly usersService: UsersService) {}
 
-    @Get()
+    @Get('all')
     findAllUsers(): Promise<User[]> {
         return this.usersService.findAll();
     }
 
-    @Post('create')
+    @ApiParam({ name: 'userId', type: String })
+    @Get(':userId')
+    async findAUser(@Param() params): Promise<User> {
+        return this.usersService.findOne(Types.ObjectId(params.userId));
+    }
+
+    @Post()
     async createUser(@Body() user: createUserDto): Promise<any> {
         try {
             await this.usersService.create(user);
