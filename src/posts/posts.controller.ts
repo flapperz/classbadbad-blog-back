@@ -11,6 +11,7 @@ import {
     Patch,
 } from '@nestjs/common';
 import { Get, Post, Put, Delete } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { Post as IPost } from '../interfaces/post.interface.entity';
 import addCommentDto from './dto/add-comment.dto';
 import createPostDto from './dto/create-post.dto';
@@ -21,11 +22,13 @@ import { PostsService } from './posts.service';
 export class PostsController {
     constructor(private readonly postsService: PostsService) {}
 
+    @ApiTags('Post')
     @Get()
     findAllPost(): Promise<IPost[]> {
         return this.postsService.findAllPost();
     }
 
+    @ApiTags('Post')
     @Post()
     async createPost(@Body() post: createPostDto): Promise<any> {
         try {
@@ -39,6 +42,7 @@ export class PostsController {
         }
     }
 
+    @ApiTags('Post')
     @Patch()
     async editPost(@Body() post: editPostDto): Promise<any> {
         try {
@@ -52,6 +56,7 @@ export class PostsController {
         }
     }
 
+    @ApiTags('Post')
     @Delete(':postId')
     async deletePost(@Param() params): Promise<any> {
         try {
@@ -67,11 +72,14 @@ export class PostsController {
 
     //COMMENT SECTION
 
+    @ApiTags('Comment')
     @Get('comment/:postId')
     async findAllComments(@Param() params): Promise<any> {
         return this.postsService.findAllComments(params.postId);
     }
 
+    @ApiTags('Comment')
+    @ApiTags('Comment')
     @Post('comment/:postId')
     async addComment(
         @Body() comment: addCommentDto,
@@ -88,6 +96,7 @@ export class PostsController {
         }
     }
 
+    @ApiTags('Comment')
     @Patch('comment/:postId/:commentId')
     async editComment(
         @Body() comment: addCommentDto,
@@ -108,6 +117,7 @@ export class PostsController {
         }
     }
 
+    @ApiTags('Comment')
     @Delete('comment/:postId/:commentId')
     async deleteComment(@Param() params): Promise<any> {
         try {
