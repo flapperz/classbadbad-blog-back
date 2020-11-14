@@ -6,14 +6,12 @@ export interface Post extends Document {
     readonly message: string;
     readonly timestamp: Date;
     readonly isEdited: boolean;
-    readonly isDeleted: boolean;
     readonly replies: [
         {
             userId: User;
             replyMsg: string;
             timestamp: Date;
             isEdited: boolean;
-            isDeleted: boolean;
         },
     ];
 }
