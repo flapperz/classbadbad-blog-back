@@ -14,32 +14,38 @@ import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class PostsService {
-    
     constructor(
         private readonly usersService: UsersService,
-        @InjectModel('Post') private readonly postModel: Model<Post>) {}
+        @InjectModel('Post') private readonly postModel: Model<Post>,
+    ) {}
 
     //POST SECTION
     async findAllPost(): Promise<any> {
         let postData = await this.postModel.find({}).select('-__v').lean();
         let userData = await this.usersService.findAll();
-        
-        
+
         const userDict = {};
 
         userData.forEach((user) => {
-            const {_id, ...other} = user;
-            userDict[user._id.toString()] = {...other};
+            const { _id, ...other } = user;
+            userDict[user._id.toString()] = { ...other };
         });
 
         return postData.map((post) => {
-            const {comments, ...other} = post;
+            const { comments, ...other } = post;
             const new_comments = comments.map((comment) => {
-                return {...comment, username: userDict[comment.userId.toHexString()]._doc.username};
-            })
-            return {...other, username: userDict[post.userId.toHexString()]._doc.username, comments: new_comments};
+                return {
+                    ...comment,
+                    username:
+                        userDict[comment.userId.toHexString()]._doc.username,
+                };
+            });
+            return {
+                ...other,
+                username: userDict[post.userId.toHexString()]._doc.username,
+                comments: new_comments,
+            };
         });
-
     }
 
     async create(post: createPostDto, userId: string): Promise<any> {

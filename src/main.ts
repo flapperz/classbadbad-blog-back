@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { Response, Request } from 'express';
-import * as fs from 'fs'
+import * as fs from 'fs';
 import cors from 'cors';
 import config from './config';
 import { from } from 'rxjs';
@@ -12,7 +12,6 @@ async function bootstrap() {
         key: fs.readFileSync('.cert/back_key.pem'),
         cert: fs.readFileSync('.cert/back_cert.pem'),
     };
-    
 
     const app = await NestFactory.create(AppModule, { httpsOptions });
 
