@@ -33,6 +33,9 @@ $ yarn
 $ yarn start
 ```
 
+## Swagger
+```http://localhost:3000/api/```
+
 ## License
 
   Nest is [MIT licensed](LICENSE).
