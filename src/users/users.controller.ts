@@ -10,17 +10,25 @@ import {
     Request,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import {
+    ApiBearerAuth,
+    ApiOperation,
+    ApiParam,
+    ApiTags,
+} from '@nestjs/swagger';
 import { Types } from 'mongoose';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { User } from '../interfaces/user.interface.entity';
 import createUserDto from './dto/create-user.dto';
 import { UsersService } from './users.service';
 
 @ApiTags('User')
 @Controller('user')
+@ApiBearerAuth('JWT')
 export class UsersController {
     constructor(private readonly usersService: UsersService) {}
 
+    @UseGuards(JwtAuthGuard)
     @ApiOperation({
         summary: 'Get all users',
     })
@@ -29,19 +37,17 @@ export class UsersController {
         return this.usersService.findAll();
     }
 
+    @UseGuards(JwtAuthGuard)
     @ApiOperation({
-        summary: 'Get user from ID or Current user if no ID provided',
+        summary: 'Get user from ID',
     })
     @ApiParam({ name: 'userId', type: String })
     @Get(':userId')
-    async findAUser(@Param() params): Promise<User> {
-        if (params.userId == '')
-            return this.usersService.findOne(
-                Types.ObjectId('5fad8d9830711d03b0b43a9c'),
-            );
+    async findAUser(@Request() req, @Param() params): Promise<User> {
         return this.usersService.findOne(Types.ObjectId(params.userId));
     }
 
+    @UseGuards(JwtAuthGuard)
     @ApiOperation({
         summary: 'Create User',
     })
