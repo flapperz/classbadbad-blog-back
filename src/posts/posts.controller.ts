@@ -62,7 +62,10 @@ export class PostsController {
             if (err.message == 'auth err') {
                 throw new HttpException(err.message, HttpStatus.UNAUTHORIZED);
             } else {
-                throw new HttpException('create post err', HttpStatus.BAD_REQUEST);
+                throw new HttpException(
+                    'create post err',
+                    HttpStatus.BAD_REQUEST,
+                );
             }
         }
     }
@@ -84,7 +87,10 @@ export class PostsController {
             if (err.message == 'auth err') {
                 throw new HttpException(err.message, HttpStatus.UNAUTHORIZED);
             } else {
-                throw new HttpException('update post err', HttpStatus.BAD_REQUEST);
+                throw new HttpException(
+                    'update post err',
+                    HttpStatus.BAD_REQUEST,
+                );
             }
         }
     }
@@ -110,7 +116,10 @@ export class PostsController {
             if (err.message == 'auth err') {
                 throw new HttpException(err.message, HttpStatus.UNAUTHORIZED);
             } else {
-                throw new HttpException('delete post err', HttpStatus.BAD_REQUEST);
+                throw new HttpException(
+                    'delete post err',
+                    HttpStatus.BAD_REQUEST,
+                );
             }
         }
     }
@@ -153,7 +162,10 @@ export class PostsController {
             if (err.message == 'auth err') {
                 throw new HttpException(err.message, HttpStatus.UNAUTHORIZED);
             } else {
-                throw new HttpException('add comment err', HttpStatus.BAD_REQUEST);
+                throw new HttpException(
+                    'add comment err',
+                    HttpStatus.BAD_REQUEST,
+                );
             }
         }
     }
@@ -186,7 +198,10 @@ export class PostsController {
             if (err.message == 'auth err') {
                 throw new HttpException(err.message, HttpStatus.UNAUTHORIZED);
             } else {
-                throw new HttpException('edit comment err', HttpStatus.BAD_REQUEST);
+                throw new HttpException(
+                    'edit comment err',
+                    HttpStatus.BAD_REQUEST,
+                );
             }
         }
     }
@@ -214,7 +229,10 @@ export class PostsController {
             if (err.message == 'auth err') {
                 throw new HttpException(err.message, HttpStatus.UNAUTHORIZED);
             } else {
-                throw new HttpException('delete comment err', HttpStatus.BAD_REQUEST);
+                throw new HttpException(
+                    'delete comment err',
+                    HttpStatus.BAD_REQUEST,
+                );
             }
         }
     }
