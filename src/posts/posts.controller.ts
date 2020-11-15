@@ -8,15 +8,24 @@ import {
     Param,
     Patch,
     Post,
+    UseGuards,
+    Request,
 } from '@nestjs/common';
-import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import {
+    ApiBearerAuth,
+    ApiOperation,
+    ApiParam,
+    ApiTags,
+} from '@nestjs/swagger';
 import { Types } from 'mongoose';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Post as IPost } from '../interfaces/post.interface.entity';
 import addCommentDto from './dto/add-comment.dto';
 import createPostDto from './dto/create-post.dto';
 import editPostDto from './dto/edit-post.dto';
 import { PostsService } from './posts.service';
 
+@ApiBearerAuth('JWT')
 @Controller('post')
 export class PostsController {
     constructor(private readonly postsService: PostsService) {}
@@ -25,6 +34,7 @@ export class PostsController {
         summary: 'Get all posts and comments (Entire feed)',
     })
     @ApiTags('Post')
+    @UseGuards(JwtAuthGuard)
     @Get()
     findAllPost(): Promise<IPost[]> {
         return this.postsService.findAllPost();
@@ -34,10 +44,14 @@ export class PostsController {
         summary: 'Create Post',
     })
     @ApiTags('Post')
+    @UseGuards(JwtAuthGuard)
     @Post()
-    async createPost(@Body() post: createPostDto): Promise<any> {
+    async createPost(
+        @Request() req,
+        @Body() post: createPostDto,
+    ): Promise<any> {
         try {
-            await this.postsService.create(post);
+            await this.postsService.create(post, req.user.userId);
             return {
                 status: 200,
                 message: 'create ok',
@@ -51,10 +65,11 @@ export class PostsController {
         summary: 'Update Post',
     })
     @ApiTags('Post')
+    @UseGuards(JwtAuthGuard)
     @Patch()
-    async editPost(@Body() post: editPostDto): Promise<any> {
+    async editPost(@Request() req, @Body() post: editPostDto): Promise<any> {
         try {
-            await this.postsService.editPost(post);
+            await this.postsService.editPost(post, req.user.userId);
             return {
                 status: 200,
                 message: 'edit post ok',
@@ -68,11 +83,15 @@ export class PostsController {
         summary: 'Delete Post',
     })
     @ApiTags('Post')
+    @UseGuards(JwtAuthGuard)
     @ApiParam({ name: 'postId', type: String })
     @Delete(':postId')
-    async deletePost(@Param() params): Promise<any> {
+    async deletePost(@Request() req, @Param() params): Promise<any> {
         try {
-            await this.postsService.deletePost(Types.ObjectId(params.postId));
+            await this.postsService.deletePost(
+                Types.ObjectId(params.postId),
+                req.user.userId,
+            );
             return {
                 status: 200,
                 message: 'delete post ok',
