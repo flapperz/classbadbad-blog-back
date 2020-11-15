@@ -9,6 +9,10 @@ async function bootstrap() {
         .setTitle('Classbadbad swagger')
         .setDescription('Classbadbad backend API description')
         .setVersion('1.0')
+        .addBearerAuth(
+            { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
+            'JWT',
+        )
         .build();
     const document = SwaggerModule.createDocument(app, options);
     SwaggerModule.setup('api', app, document);
