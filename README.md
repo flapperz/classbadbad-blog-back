@@ -1,6 +1,9 @@
 # Classbadbad-blog backend
 Computer Security's terms project
 
+## User Role
+`0 : admin`
+`1 : user`
 ## ACL
 | Role  | Own post | Others post | Own comment | Others comment         |
 |-------|----------|-------------|-------------|-----------------------|
