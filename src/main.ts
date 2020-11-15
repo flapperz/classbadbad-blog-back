@@ -17,10 +17,10 @@ async function bootstrap() {
         app.use((req: Request, res: Response, next) => {
         //   res.setHeader("Access-Control-Allow-Credentials", "true");
           res.setHeader("Access-Control-Allow-Origin", config.CORS_HOST);
-          // res.setHeader(
-          //   "Access-Control-Allow-Methods",
-          //   "POST, GET, OPTIONS, DELETE, PUT"
-          // );
+          res.setHeader(
+            "Access-Control-Allow-Methods",
+            "POST, GET, DELETE, PATCH"
+          );
           next();
         });
     
