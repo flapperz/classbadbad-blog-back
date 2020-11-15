@@ -55,11 +55,15 @@ export class PostsController {
         try {
             await this.postsService.create(post, req.user.userId);
             return {
-                status: 200,
+                status: HttpStatus.OK,
                 message: 'create ok',
             };
         } catch (err) {
-            throw new HttpException(err.message, HttpStatus.BAD_REQUEST);
+            if (err.message == 'auth err') {
+                throw new HttpException(err.message, HttpStatus.UNAUTHORIZED);
+            } else {
+                throw new HttpException('create post err', HttpStatus.BAD_REQUEST);
+            }
         }
     }
 
@@ -73,11 +77,15 @@ export class PostsController {
         try {
             await this.postsService.editPost(post, req.user);
             return {
-                status: 200,
+                status: HttpStatus.OK,
                 message: 'edit post ok',
             };
         } catch (err) {
-            throw new HttpException(err.message, HttpStatus.BAD_REQUEST);
+            if (err.message == 'auth err') {
+                throw new HttpException(err.message, HttpStatus.UNAUTHORIZED);
+            } else {
+                throw new HttpException('update post err', HttpStatus.BAD_REQUEST);
+            }
         }
     }
 
@@ -95,11 +103,15 @@ export class PostsController {
                 req.user,
             );
             return {
-                status: 200,
+                status: HttpStatus.OK,
                 message: 'delete post ok',
             };
         } catch (err) {
-            throw new HttpException(err.message, HttpStatus.BAD_REQUEST);
+            if (err.message == 'auth err') {
+                throw new HttpException(err.message, HttpStatus.UNAUTHORIZED);
+            } else {
+                throw new HttpException('delete post err', HttpStatus.BAD_REQUEST);
+            }
         }
     }
 
@@ -134,11 +146,15 @@ export class PostsController {
                 req.user,
             );
             return {
-                status: 200,
+                status: HttpStatus.OK,
                 message: 'add comment ok',
             };
         } catch (err) {
-            throw new HttpException(err.message, HttpStatus.BAD_REQUEST);
+            if (err.message == 'auth err') {
+                throw new HttpException(err.message, HttpStatus.UNAUTHORIZED);
+            } else {
+                throw new HttpException('add comment err', HttpStatus.BAD_REQUEST);
+            }
         }
     }
 
@@ -163,11 +179,15 @@ export class PostsController {
                 req.user,
             );
             return {
-                status: 200,
+                status: HttpStatus.OK,
                 message: 'edit comment ok',
             };
         } catch (err) {
-            throw new HttpException(err.message, HttpStatus.BAD_REQUEST);
+            if (err.message == 'auth err') {
+                throw new HttpException(err.message, HttpStatus.UNAUTHORIZED);
+            } else {
+                throw new HttpException('edit comment err', HttpStatus.BAD_REQUEST);
+            }
         }
     }
 
@@ -187,11 +207,15 @@ export class PostsController {
                 req.user,
             );
             return {
-                status: 200,
+                status: HttpStatus.OK,
                 message: 'delete comment ok',
             };
         } catch (err) {
-            throw new HttpException(err.message, HttpStatus.BAD_REQUEST);
+            if (err.message == 'auth err') {
+                throw new HttpException(err.message, HttpStatus.UNAUTHORIZED);
+            } else {
+                throw new HttpException('delete comment err', HttpStatus.BAD_REQUEST);
+            }
         }
     }
 }
