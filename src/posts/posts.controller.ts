@@ -69,7 +69,7 @@ export class PostsController {
     @Patch()
     async editPost(@Request() req, @Body() post: editPostDto): Promise<any> {
         try {
-            await this.postsService.editPost(post, req.user.userId);
+            await this.postsService.editPost(post, req.user);
             return {
                 status: 200,
                 message: 'edit post ok',
@@ -90,7 +90,7 @@ export class PostsController {
         try {
             await this.postsService.deletePost(
                 Types.ObjectId(params.postId),
-                req.user.userId,
+                req.user,
             );
             return {
                 status: 200,

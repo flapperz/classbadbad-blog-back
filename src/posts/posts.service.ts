@@ -31,24 +31,26 @@ export class PostsService {
         return postEntity;
     }
 
-    async editPost(post: editPostDto, userId: string): Promise<any> {
+    async editPost(post: editPostDto, user: any): Promise<any> {
         const res = await this.postModel.findOne({ _id: post.postId });
-        if (res.userId.toHexString() !== userId) throw new Error('auth err');
-
-        return await this.postModel.updateOne(
-            { _id: post.postId },
-            {
-                ...post,
-                isEdited: true,
-                timestamp: new Date(),
-            },
-        );
+        if (res.userId.toHexString() == user.userId || user.role == 0)
+            return await this.postModel.updateOne(
+                { _id: post.postId },
+                {
+                    ...post,
+                    isEdited: true,
+                    timestamp: new Date(),
+                },
+            );
+        else throw new Error('auth err');
     }
 
-    async deletePost(postId: Types.ObjectId, userId: string): Promise<any> {
+    async deletePost(postId: Types.ObjectId, user: any): Promise<any> {
         const res = await this.postModel.findOne({ _id: postId });
-        if (res.userId.toHexString() !== userId) throw new Error('auth err');
-        return this.postModel.deleteOne({ _id: postId });
+
+        if (res.userId.toHexString() == user.userId || user.role == 0)
+            return this.postModel.deleteOne({ _id: postId });
+        else throw new Error('auth err');
     }
 
     //COMMENTS SECTION
