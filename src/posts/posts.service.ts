@@ -37,7 +37,7 @@ export class PostsService {
             const new_comments = comments.map((comment) => {
                 return {...comment, username: userDict[comment.userId.toHexString()]._doc.username};
             })
-            return {...other, username: userDict[post.userId.toHexString()]._doc.username, new_comments};
+            return {...other, username: userDict[post.userId.toHexString()]._doc.username, comments: new_comments};
         });
 
     }
