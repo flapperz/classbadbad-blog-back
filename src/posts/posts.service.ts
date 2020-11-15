@@ -1,5 +1,5 @@
 import { Model, Types } from 'mongoose';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectModel, Schema } from '@nestjs/mongoose';
 import { Post } from '../interfaces/post.interface.entity';
 import createPostDto from './dto/create-post.dto';
@@ -8,16 +8,38 @@ import addCommentDto from './dto/add-comment.dto';
 import mongoose from 'mongoose';
 import { types } from 'util';
 import userToken from 'src/interfaces/token.interface';
+import { UsersService } from 'src/users/users.service';
 
 // import createUserDto from './dto/create-user-dto';
 
 @Injectable()
 export class PostsService {
-    constructor(@InjectModel('Post') private readonly postModel: Model<Post>) {}
+    
+    constructor(
+        private readonly usersService: UsersService,
+        @InjectModel('Post') private readonly postModel: Model<Post>) {}
 
     //POST SECTION
-    async findAllPost(): Promise<Post[]> {
-        return await this.postModel.find({});
+    async findAllPost(): Promise<any> {
+        let postData = await this.postModel.find({}).select('-__v').lean();
+        let userData = await this.usersService.findAll();
+        
+        
+        const userDict = {};
+
+        userData.forEach((user) => {
+            const {_id, ...other} = user;
+            userDict[user._id.toString()] = {...other};
+        });
+
+        return postData.map((post) => {
+            const {comments, ...other} = post;
+            const new_comments = comments.map((comment) => {
+                return {...comment, username: userDict[comment.userId.toHexString()]._doc.username};
+            })
+            return {...other, username: userDict[post.userId.toHexString()]._doc.username, new_comments};
+        });
+
     }
 
     async create(post: createPostDto, userId: string): Promise<any> {
