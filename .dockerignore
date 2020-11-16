@@ -1,0 +1,6 @@
+.github
+data
+files
+node_modules
+.git
+migrations
