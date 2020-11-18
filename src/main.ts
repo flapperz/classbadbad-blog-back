@@ -1,11 +1,9 @@
 import { NestFactory } from '@nestjs/core';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { Response, Request } from 'express';
 import * as fs from 'fs';
 import cors from 'cors';
 import config from './config';
-import { from } from 'rxjs';
 
 async function bootstrap() {
     const httpsOptions = {
@@ -33,18 +31,6 @@ async function bootstrap() {
     }
 
     app.use(cors(corsOptions));
-
-    const options = new DocumentBuilder()
-        .setTitle('Classbadbad swagger')
-        .setDescription('Classbadbad backend API description')
-        .setVersion('1.0')
-        .addBearerAuth(
-            { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
-            'JWT',
-        )
-        .build();
-    const document = SwaggerModule.createDocument(app, options);
-    SwaggerModule.setup('api', app, document);
 
     await app.listen(config.PORT);
 }

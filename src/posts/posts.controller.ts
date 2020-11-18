@@ -13,12 +13,6 @@ import {
     Req,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import {
-    ApiBearerAuth,
-    ApiOperation,
-    ApiParam,
-    ApiTags,
-} from '@nestjs/swagger';
 import { Types } from 'mongoose';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Post as IPost } from '../interfaces/post.interface.entity';
@@ -27,25 +21,16 @@ import createPostDto from './dto/create-post.dto';
 import editPostDto from './dto/edit-post.dto';
 import { PostsService } from './posts.service';
 
-@ApiBearerAuth('JWT')
 @Controller('post')
 export class PostsController {
     constructor(private readonly postsService: PostsService) {}
 
-    @ApiOperation({
-        summary: 'Get all posts and comments (Entire feed)',
-    })
-    @ApiTags('Post')
     @UseGuards(JwtAuthGuard)
     @Get()
     findAllPost(): Promise<IPost[]> {
         return this.postsService.findAllPost();
     }
 
-    @ApiOperation({
-        summary: 'Create Post',
-    })
-    @ApiTags('Post')
     @UseGuards(JwtAuthGuard)
     @Post()
     async createPost(
@@ -70,10 +55,6 @@ export class PostsController {
         }
     }
 
-    @ApiOperation({
-        summary: 'Update Post',
-    })
-    @ApiTags('Post')
     @UseGuards(JwtAuthGuard)
     @Patch()
     async editPost(@Request() req, @Body() post: editPostDto): Promise<any> {
@@ -95,11 +76,6 @@ export class PostsController {
         }
     }
 
-    @ApiOperation({
-        summary: 'Delete Post',
-    })
-    @ApiTags('Post')
-    @ApiParam({ name: 'postId', type: String })
     @UseGuards(JwtAuthGuard)
     @Delete(':postId')
     async deletePost(@Request() req, @Param() params): Promise<any> {
@@ -125,22 +101,13 @@ export class PostsController {
     }
 
     //COMMENT SECTION
-    @ApiOperation({
-        summary: 'Get all comments in a post',
-    })
-    @ApiTags('Comment')
-    @ApiParam({ name: 'postId', type: String })
+
     @UseGuards(JwtAuthGuard)
     @Get('comment/:postId')
     async findAllComments(@Param() params): Promise<any> {
         return this.postsService.findAllComments(Types.ObjectId(params.postId));
     }
 
-    @ApiOperation({
-        summary: 'Create Comment',
-    })
-    @ApiTags('Comment')
-    @ApiParam({ name: 'postId', type: String })
     @UseGuards(JwtAuthGuard)
     @Post('comment/:postId')
     async addComment(
@@ -170,12 +137,6 @@ export class PostsController {
         }
     }
 
-    @ApiOperation({
-        summary: 'Update Comment',
-    })
-    @ApiTags('Comment')
-    @ApiParam({ name: 'postId', type: String })
-    @ApiParam({ name: 'commentId', type: String })
     @UseGuards(JwtAuthGuard)
     @Patch('comment/:postId/:commentId')
     async editComment(
@@ -206,12 +167,6 @@ export class PostsController {
         }
     }
 
-    @ApiOperation({
-        summary: 'Delete Comment',
-    })
-    @ApiTags('Comment')
-    @ApiParam({ name: 'postId', type: String })
-    @ApiParam({ name: 'commentId', type: String })
     @UseGuards(JwtAuthGuard)
     @Delete('comment/:postId/:commentId')
     async deleteComment(@Request() req, @Param() params): Promise<any> {
