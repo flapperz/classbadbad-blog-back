@@ -6,7 +6,7 @@ import cors from 'cors';
 import config from './config';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
-import csurf from 'csurf';
+// import csurf from 'csurf';
 
 async function bootstrap() {
     const httpsOptions = {
@@ -35,7 +35,7 @@ async function bootstrap() {
 
     app.use(cors(corsOptions));
     app.use(helmet());
-    app.use(csurf());
+    // app.use(csurf());
     app.use(
         rateLimit({
             windowMs: 15 * 60 * 1000, // 15 minutes
