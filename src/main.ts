@@ -13,7 +13,7 @@ async function bootstrap() {
 
     const app = await NestFactory.create(AppModule, { httpsOptions });
 
-    var corsOptions = {
+    const corsOptions = {
         Credentials: true,
         origin: config.CORS_HOST,
         optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
