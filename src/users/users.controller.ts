@@ -31,17 +31,17 @@ export class UsersController {
         return this.usersService.findOne(Types.ObjectId(params.userId));
     }
 
-    @UseGuards(JwtAuthGuard)
-    @Post()
-    async createUser(@Body() user: createUserDto): Promise<any> {
-        try {
-            await this.usersService.create(user);
-            return {
-                status: 200,
-                message: 'ok',
-            };
-        } catch (err) {
-            throw new HttpException(err.message, HttpStatus.BAD_REQUEST);
-        }
-    }
+    // @UseGuards(JwtAuthGuard)
+    // @Post()
+    // async createUser(@Body() user: createUserDto): Promise<any> {
+    //     try {
+    //         await this.usersService.create(user);
+    //         return {
+    //             status: 200,
+    //             message: 'ok',
+    //         };
+    //     } catch (err) {
+    //         throw new HttpException(err.message, HttpStatus.BAD_REQUEST);
+    //     }
+    // }
 }
