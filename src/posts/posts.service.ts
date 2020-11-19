@@ -147,10 +147,13 @@ export class PostsService {
                 _id: postId,
             })
             .select({ comments: { $elemMatch: { _id: commentId } } });
+        const res2 = await this.postModel.findOne({
+            _id: postId,
+        });
         if (
             res.comments[0].userId.toHexString() === user.userId ||
             user.role === 0 ||
-            res.userId.toHexString() === user.userId
+            res2.userId.toHexString() === user.userId
         )
             return this.postModel.updateOne(
                 { _id: postId },
