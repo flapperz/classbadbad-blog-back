@@ -149,7 +149,8 @@ export class PostsService {
             .select({ comments: { $elemMatch: { _id: commentId } } });
         if (
             res.comments[0].userId.toHexString() === user.userId ||
-            user.role === 0
+            user.role === 0 ||
+            res.userId.toHexString() === user.userId
         )
             return this.postModel.updateOne(
                 { _id: postId },
