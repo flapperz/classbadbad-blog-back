@@ -9,12 +9,12 @@ import helmet from 'helmet';
 // import csurf from 'csurf';
 
 async function bootstrap() {
-    const httpsOptions = {
-        key: fs.readFileSync('.cert/back_key.pem'),
-        cert: fs.readFileSync('.cert/back_cert.pem'),
-    };
+    // const httpsOptions = {
+    //     key: fs.readFileSync('.cert/back_key.pem'),
+    //     cert: fs.readFileSync('.cert/back_cert.pem'),
+    // };
 
-    const app = await NestFactory.create(AppModule, { httpsOptions });
+    const app = await NestFactory.create(AppModule);
 
     const corsOptions = {
         Credentials: true,
@@ -24,7 +24,7 @@ async function bootstrap() {
     if (config.ALLOW_CORS === 'true') {
         app.use((req: Request, res: Response, next) => {
             //   res.setHeader("Access-Control-Allow-Credentials", "true");
-            res.setHeader('Access-Control-Allow-Origin', config.CORS_HOST);
+            res.setHeader('Access-Control-Allow-Origin', '*');
             res.setHeader(
                 'Access-Control-Allow-Methods',
                 'POST, GET, DELETE, PATCH',
