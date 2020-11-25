@@ -6,6 +6,7 @@ import * as fs from 'fs';
 import cors from 'cors';
 import config from './config';
 import { from } from 'rxjs';
+import { ValidationPipe } from '@nestjs/common/pipes/validation.pipe';
 
 async function bootstrap() {
     const httpsOptions = {
@@ -14,6 +15,9 @@ async function bootstrap() {
     };
 
     const app = await NestFactory.create(AppModule, { httpsOptions });
+    app.useGlobalPipes(new ValidationPipe({
+        whitelist: true,
+    }));
 
     var corsOptions = {
         Credentials: true,
