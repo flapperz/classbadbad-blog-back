@@ -18,6 +18,11 @@ export class AppController {
         private readonly authService: AuthService,
     ) {}
 
+    @Get()
+    getHello(): string {
+        return 'hello world';
+    }
+
     @UseGuards(AuthGuard('local'))
     @Post('auth/login')
     async login(@Request() req, @Body() user: loginDto) {
