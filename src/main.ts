@@ -24,7 +24,7 @@ async function bootstrap() {
     if (config.ALLOW_CORS === 'true') {
         app.use((req: Request, res: Response, next) => {
             //   res.setHeader("Access-Control-Allow-Credentials", "true");
-            res.setHeader('Access-Control-Allow-Origin', '*');
+            res.setHeader('Access-Control-Allow-Origin', config.CORS_HOST);
             res.setHeader(
                 'Access-Control-Allow-Methods',
                 'POST, GET, DELETE, PATCH',
